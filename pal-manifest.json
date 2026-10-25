@@ -1,0 +1,49 @@
+{
+  "title": "Wallpaper Engine",
+  "author": "elysia395 / PAL adaptation",
+  "category": "appearance",
+  "icon": "sparkles",
+  "activationScope": "global",
+  "configScope": "global",
+  "workspaceTargets": ["local", "ssh"],
+  "permissions": [
+    "pal.host.inject",
+    "pal.storage.read",
+    "pal.storage.write",
+    "pal.fs.read",
+    "pal.fs.write",
+    "pal.process.spawn",
+    "pal.network.fetch"
+  ],
+  "declarations": {
+    "provides": {
+      "ui": [
+        {
+          "id": "pal.wallpaper-engine.connection",
+          "slot": "pal.ui.panel",
+          "description": "Provide the host injection with the wallpaper service connection"
+        }
+      ]
+    }
+  },
+  "extensions": ["pal.ui.panel", "pal.ui.settings"],
+  "frontends": { "assets": { "root": "dist/ui", "entry": "index.html" } },
+  "settings": {
+    "title": "Wallpaper Engine",
+    "frontend": "assets",
+    "renderMode": "host-injection",
+    "width": "wide",
+    "locales": { "zh-CN": { "title": "壁纸引擎" } }
+  },
+  "hostInjection": {
+    "frontend": "assets",
+    "script": "host.js",
+    "stylesheet": "host.css"
+  },
+  "locales": {
+    "zh-CN": {
+      "name": "动态壁纸引擎",
+      "description": "本地壁纸、实时场景、液态玻璃、字体及外观设置。"
+    }
+  }
+}
