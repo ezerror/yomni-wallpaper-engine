@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { createModeraServer } from "./modera-server.js";
-import type { PluginContext, PluginContributions } from "@anypal/plugin-sdk";
+import type { PluginContext, PluginContributions } from "@yomni/plugin-sdk";
 
 let dispose: (() => void) | undefined;
 
@@ -22,7 +22,7 @@ export async function activate(
       modera: {
         dataDir: context.storagePath,
         mediaBase: server.endpoint,
-        steamRoot: process.env.PAL_WALLPAPER_STEAM_ROOT,
+        steamRoot: (process.env.YOMNI_WALLPAPER_STEAM_ROOT ?? process.env.PAL_WALLPAPER_STEAM_ROOT),
       },
       logger: () => console,
     });

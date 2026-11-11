@@ -1,22 +1,28 @@
 {
-  "name": "@anypal/plugin-wallpaper-engine",
+  "name": "@yomni/plugin-wallpaper-engine",
   "version": "1.3.9",
   "type": "module",
   "license": "MIT",
-  "description": "Local and live wallpapers, liquid glass, and appearance controls for Pal.",
-  "files": ["pal-manifest.json", "dist", "LICENSE", "NOTICE"],
+  "description": "Local and live wallpapers, liquid glass, and appearance controls for Yomni.",
+  "files": [
+    "pal-manifest.json",
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
   "scripts": {
-    "build": "node scripts/build-pal.mjs && pal-plugin-build .",
-    "pack": "pal-plugin pack .",
+    "build": "node scripts/build-pal.mjs && yomni-plugin-build .",
+    "pack": "yomni-plugin pack .",
     "test": "node --test test/pal-*.test.mjs",
     "typecheck": "tsc --noEmit",
     "dev": "node ../../pal/tools/workspace.mjs dev --plugin ."
   },
   "devDependencies": {
-    "@anypal/contracts": "0.1.0",
-    "@anypal/plugin-build": "0.1.0",
-    "@anypal/plugin-sdk": "0.1.0",
     "@types/node": "^22.0.0",
+    "@yomni/contracts": "file:vendor/yomni-devkit/yomni-contracts-0.1.0.tgz",
+    "@yomni/plugin-build": "file:vendor/yomni-devkit/yomni-plugin-build-0.1.0.tgz",
+    "@yomni/plugin-sdk": "file:vendor/yomni-devkit/yomni-plugin-sdk-0.1.0.tgz",
+    "@yomni/ui": "file:vendor/yomni-devkit/yomni-ui-0.1.0.tgz",
     "esbuild": "^0.25.12",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -29,5 +35,7 @@
     "manifest": "./pal-manifest.json"
   },
   "exports": "./dist/index.cjs",
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }

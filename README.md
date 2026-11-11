@@ -16,7 +16,7 @@ npm run pack
 
 The packaged plugin is written under `release/plugin-npm/`. During development, `npm run dev` starts the adjacent `D:\pals\pal` checkout with this plugin.
 
-The plugin needs the trusted `pal.host.inject` permission to draw behind Pal's UI. A user can point it at a Wallpaper Engine Steam library with `PAL_WALLPAPER_STEAM_ROOT`; otherwise the upstream library discovery runs. Data is stored in Pal's plugin storage directory.
+The plugin needs the trusted `pal.host.inject` permission to draw behind Pal's UI. A user can point it at a Wallpaper Engine Steam library with `YOMNI_WALLPAPER_STEAM_ROOT`; otherwise the upstream library discovery runs. Data is stored in Pal's plugin storage directory.
 
 ## Source and license
 

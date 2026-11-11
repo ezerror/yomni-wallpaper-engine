@@ -11,7 +11,7 @@ test("Pal activates the wallpaper service and preserves upstream media routes", 
   const resourcePath = resolve(dirname(fileURLToPath(import.meta.url)), "..");
   const manifest = JSON.parse(await readFile(join(resourcePath, "pal-manifest.json"), "utf8"));
   assert.ok(!manifest.extensions.includes("pal.window.overlay"));
-  process.env.PAL_WALLPAPER_STEAM_ROOT = join(storagePath, "empty-steam");
+  process.env.YOMNI_WALLPAPER_STEAM_ROOT = join(storagePath, "empty-steam");
   const controller = new AbortController();
   const activate = async () => {
     const contributions = await plugin.activate({
