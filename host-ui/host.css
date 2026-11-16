@@ -1,4 +1,4 @@
-/* Pal bindings for the original plugin's material and typography controls. */
+/* Yomni bindings for the original plugin's material and typography controls. */
 body[data-modera-wallpaper] {
   --dsw-font-family: var(--mu-font, system-ui);
   --modera-we-ink: #202430;
@@ -248,7 +248,7 @@ body[data-modera-wallpaper][data-we-glass-floaters]
   backdrop-filter: blur(var(--we-blur, 20px));
   border-color: var(--dsw-alias-border-l1) !important;
 }
-.host-injection-panel[data-host-injection-panel="pal.wallpaper-engine"] {
+.host-injection-panel[data-host-injection-panel="yomni.wallpaper-engine"] {
   color: var(--dsw-alias-label-primary);
   background: var(--modera-we-popup-pane);
   font-family: var(--dsw-font-family);
@@ -271,7 +271,7 @@ body[data-modera-wallpaper][data-we-glass-floaters]
 .modera-we-settings-content .we-section-card {
   max-width: none;
 }
-.host-injection-panel[data-host-injection-panel="pal.wallpaper-engine"] :is(button, input, select) {
+.host-injection-panel[data-host-injection-panel="yomni.wallpaper-engine"] :is(button, input, select) {
   font: inherit;
 }
 .modera-we-back:focus-visible {

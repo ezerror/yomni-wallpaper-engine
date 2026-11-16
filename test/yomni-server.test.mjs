@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createModeraServer } from "../src/modera-server.js";
 
-test("Pal wallpaper server restricts origins and requires capability for writes", async () => {
+test("Yomni wallpaper server restricts origins and requires capability for writes", async () => {
   const controller = new AbortController();
   const server = await createModeraServer(controller.signal);
   let calls = 0;

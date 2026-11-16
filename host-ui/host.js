@@ -4,8 +4,8 @@ import { createPortal, flushSync } from "react-dom";
 import { createUpstream } from "../dist/generated/upstream-client.js";
 
 export default async function mount({ pluginId, projectId, setTheme, signal }) {
-  const connection = await window.pal.plugins.uiRequest({
-    id: "pal.wallpaper-engine.connection",
+  const connection = await window.yomni.plugins.uiRequest({
+    id: "yomni.wallpaper-engine.connection",
     projectId,
     sessionId: "",
     locale: document.documentElement.lang || "zh-CN",
@@ -41,7 +41,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
     signal,
     openSettings() {
       closePanel();
-      window.dispatchEvent(new CustomEvent("pal.open-settings", {
+      window.dispatchEvent(new CustomEvent("yomni.open-settings", {
         detail: { pluginId },
       }));
     },
@@ -200,7 +200,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   });
   syncTheme();
 
-  // The upstream drawer covers the viewport; Pal reserves a native titlebar.
+  // The upstream drawer covers the viewport; Yomni reserves a native titlebar.
   const titlebarOffset = "--modera-we-titlebar-bottom";
   const previousOffset = document.body.style.getPropertyValue(titlebarOffset);
   const previousPriority =
@@ -285,13 +285,13 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   let settingsTarget;
   let settingsRoot;
   let upstream;
-  const panelId = "pal.wallpaper-engine";
+  const panelId = "yomni.wallpaper-engine";
   const panelIsActive = () => Boolean(panelTarget?.closest(".panel-region-right:not([data-hidden])")
     && !panelTarget.closest("[role=tabpanel]")?.hidden);
-  const openPanel = () => window.dispatchEvent(new CustomEvent("pal.host-panel-open", {
+  const openPanel = () => window.dispatchEvent(new CustomEvent("yomni.host-panel-open", {
     detail: { id: panelId, title: "壁纸" },
   }));
-  const closePanel = () => window.dispatchEvent(new CustomEvent("pal.host-panel-close", {
+  const closePanel = () => window.dispatchEvent(new CustomEvent("yomni.host-panel-close", {
     detail: { id: panelId },
   }));
   const renderPanel = () => {
@@ -303,7 +303,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
       settingsRoot.render(React.createElement("div", { className: "modera-we-settings-content" }, section()));
   };
   const syncSettingsTarget = () => {
-    const next = document.querySelector('.plugin-settings-layer.active [data-plugin-settings-host="pal.wallpaper-engine"]');
+    const next = document.querySelector('.plugin-settings-layer.active [data-plugin-settings-host="yomni.wallpaper-engine"]');
     if (next === settingsTarget) return;
     upstream?.moderaCloseSettings();
     settingsRoot?.unmount();
@@ -321,7 +321,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
     settingsRoot = null;
   });
   const syncPanelTarget = () => {
-    const next = document.querySelector('[data-host-injection-panel="pal.wallpaper-engine"]');
+    const next = document.querySelector('[data-host-injection-panel="yomni.wallpaper-engine"]');
     if (next === panelTarget) return;
     if (panelRoot) panelRoot.unmount();
     panelTarget = next;

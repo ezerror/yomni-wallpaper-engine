@@ -6,11 +6,11 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import plugin from "../dist/index.cjs";
 
-test("Pal activates the wallpaper service and preserves upstream media routes", async () => {
-  const storagePath = await mkdtemp(join(tmpdir(), "pal-wallpaper-"));
+test("Yomni activates the wallpaper service and preserves upstream media routes", async () => {
+  const storagePath = await mkdtemp(join(tmpdir(), "yomni-wallpaper-"));
   const resourcePath = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-  const manifest = JSON.parse(await readFile(join(resourcePath, "pal-manifest.json"), "utf8"));
-  assert.ok(!manifest.extensions.includes("pal.window.overlay"));
+  const manifest = JSON.parse(await readFile(join(resourcePath, "yomni-manifest.json"), "utf8"));
+  assert.ok(!manifest.extensions.includes("yomni.window.overlay"));
   process.env.YOMNI_WALLPAPER_STEAM_ROOT = join(storagePath, "empty-steam");
   const controller = new AbortController();
   const activate = async () => {
@@ -21,8 +21,8 @@ test("Pal activates the wallpaper service and preserves upstream media routes", 
     });
     assert.deepEqual(manifest.declarations.provides.ui.map(({ id, slot }) => ({ id, slot })),
       contributions.ui.map(({ id, slot }) => ({ id, slot })));
-    assert.equal(contributions.ui[0].id, "pal.wallpaper-engine.connection");
-    assert.equal(contributions.ui[0].slot, "pal.ui.panel");
+    assert.equal(contributions.ui[0].id, "yomni.wallpaper-engine.connection");
+    assert.equal(contributions.ui[0].slot, "yomni.ui.panel");
     assert.equal(contributions.ui[0].launcher, undefined);
     return (await contributions.ui[0].render()).data;
   };

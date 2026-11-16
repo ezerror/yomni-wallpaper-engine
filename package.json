@@ -5,17 +5,17 @@
   "license": "MIT",
   "description": "Local and live wallpapers, liquid glass, and appearance controls for Yomni.",
   "files": [
-    "pal-manifest.json",
+    "yomni-manifest.json",
     "dist",
     "LICENSE",
     "NOTICE"
   ],
   "scripts": {
-    "build": "node scripts/build-pal.mjs && yomni-plugin-build .",
+    "build": "node scripts/build-yomni.mjs && yomni-plugin-build .",
     "pack": "yomni-plugin pack .",
-    "test": "node --test test/pal-*.test.mjs",
+    "test": "node --test test/yomni-*.test.mjs",
     "typecheck": "tsc --noEmit",
-    "dev": "node ../../pal/tools/workspace.mjs dev --plugin ."
+    "dev": "node ../../yomni/tools/workspace.mjs dev --plugin ."
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -28,11 +28,11 @@
     "react-dom": "^19.1.1",
     "typescript": "^5.9.2"
   },
-  "pal": {
-    "id": "pal.wallpaper-engine",
+  "yomni": {
+    "id": "yomni.wallpaper-engine",
     "apiVersion": 1,
     "runtime": "node",
-    "manifest": "./pal-manifest.json"
+    "manifest": "./yomni-manifest.json"
   },
   "exports": "./dist/index.cjs",
   "publishConfig": {

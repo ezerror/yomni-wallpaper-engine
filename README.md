@@ -1,6 +1,6 @@
-# Wallpaper Engine for Pal
+# Wallpaper Engine for Yomni
 
-This plugin ports [modera-ai/plugin-wallpaper-engine](https://github.com/modera-ai/plugin-wallpaper-engine) to Pal. It keeps the upstream wallpaper inventory, local media and live scene renderer, appearance controls, and settings UI. The host entry, manifest, build, and desktop integration use Pal's plugin API.
+This plugin ports [modera-ai/plugin-wallpaper-engine](https://github.com/modera-ai/plugin-wallpaper-engine) to Yomni. It keeps the upstream wallpaper inventory, local media and live scene renderer, appearance controls, and settings UI. The host entry, manifest, build, and desktop integration use Yomni's plugin API.
 
 ## Develop
 
@@ -14,9 +14,9 @@ npm run typecheck
 npm run pack
 ```
 
-The packaged plugin is written under `release/plugin-npm/`. During development, `npm run dev` starts the adjacent `D:\pals\pal` checkout with this plugin.
+The packaged plugin is written under `release/plugin-npm/`. During development, `npm run dev` starts the adjacent `D:\pals\yomni` checkout with this plugin.
 
-The plugin needs the trusted `pal.host.inject` permission to draw behind Pal's UI. A user can point it at a Wallpaper Engine Steam library with `YOMNI_WALLPAPER_STEAM_ROOT`; otherwise the upstream library discovery runs. Data is stored in Pal's plugin storage directory.
+The plugin needs the trusted `yomni.host.inject` permission to draw behind Yomni's UI. A user can point it at a Wallpaper Engine Steam library with `YOMNI_WALLPAPER_STEAM_ROOT`; otherwise the upstream library discovery runs. Data is stored in Yomni's plugin storage directory.
 
 ## Source and license
 

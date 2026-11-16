@@ -3,35 +3,50 @@
   "author": "elysia395 / Yomni adaptation",
   "category": "appearance",
   "icon": "sparkles",
-  "workspaceTargets": ["local", "ssh"],
+  "workspaceTargets": [
+    "local",
+    "ssh"
+  ],
   "permissions": [
-    "pal.host.inject",
-    "pal.storage.read",
-    "pal.storage.write",
-    "pal.fs.read",
-    "pal.fs.write",
-    "pal.process.spawn",
-    "pal.network.fetch"
+    "yomni.host.inject",
+    "yomni.storage.read",
+    "yomni.storage.write",
+    "yomni.fs.read",
+    "yomni.fs.write",
+    "yomni.process.spawn",
+    "yomni.network.fetch"
   ],
   "declarations": {
     "provides": {
       "ui": [
         {
-          "id": "pal.wallpaper-engine.connection",
-          "slot": "pal.ui.panel",
+          "id": "yomni.wallpaper-engine.connection",
+          "slot": "yomni.ui.panel",
           "description": "Provide the host injection with the wallpaper service connection"
         }
       ]
     }
   },
-  "extensions": ["pal.ui.panel", "pal.ui.settings"],
-  "frontends": { "assets": { "root": "dist/ui", "entry": "index.html" } },
+  "extensions": [
+    "yomni.ui.panel",
+    "yomni.ui.settings"
+  ],
+  "frontends": {
+    "assets": {
+      "root": "dist/ui",
+      "entry": "index.html"
+    }
+  },
   "settings": {
     "title": "Wallpaper Engine",
     "frontend": "assets",
     "renderMode": "host-injection",
     "width": "wide",
-    "locales": { "zh-CN": { "title": "壁纸引擎" } }
+    "locales": {
+      "zh-CN": {
+        "title": "壁纸引擎"
+      }
+    }
   },
   "hostInjection": {
     "frontend": "assets",

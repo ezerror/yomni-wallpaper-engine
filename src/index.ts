@@ -22,7 +22,7 @@ export async function activate(
       modera: {
         dataDir: context.storagePath,
         mediaBase: server.endpoint,
-        steamRoot: (process.env.YOMNI_WALLPAPER_STEAM_ROOT ?? process.env.PAL_WALLPAPER_STEAM_ROOT),
+        steamRoot: (process.env.YOMNI_WALLPAPER_STEAM_ROOT),
       },
       logger: () => console,
     });
@@ -39,9 +39,9 @@ export async function activate(
     return {
       ui: [
         {
-          id: "pal.wallpaper-engine.connection",
-          slot: "pal.ui.panel",
-          requiredPermissions: ["pal.host.inject"],
+          id: "yomni.wallpaper-engine.connection",
+          slot: "yomni.ui.panel",
+          requiredPermissions: ["yomni.host.inject"],
           async render() {
             return {
               title: "Wallpaper Engine",
