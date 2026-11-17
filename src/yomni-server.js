@@ -25,6 +25,7 @@ export async function createYomniServer(signal) {
     if (
       origin &&
       origin !== "null" &&
+      !/^yomni-application:\/\/[a-f0-9]{32}$/.test(origin) &&
       !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
     ) {
       res.writeHead(403).end("Forbidden origin");

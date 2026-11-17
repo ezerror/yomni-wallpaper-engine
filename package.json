@@ -1,6 +1,6 @@
 {
   "name": "@yomni/plugin-wallpaper-engine",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "type": "module",
   "license": "MIT",
   "description": "Local and live wallpapers, liquid glass, and appearance controls for Yomni.",

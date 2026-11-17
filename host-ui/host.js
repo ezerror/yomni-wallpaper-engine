@@ -1,12 +1,13 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createPortal, flushSync } from "react-dom";
+import { applicationPlatform } from "@yomni/plugin-sdk/application";
 import { createUpstream } from "../dist/generated/upstream-client.js";
 
 export default async function mount({ pluginId, projectId, setTheme, signal }) {
-  const connection = await window.yomni.plugins.uiRequest({
+  const connection = await applicationPlatform().ui.uiRequest({
     id: "yomni.wallpaper-engine.connection",
-    projectId,
+    ...(projectId && projectId !== "independent" ? { projectId } : {}),
     sessionId: "",
     locale: document.documentElement.lang || "zh-CN",
   });

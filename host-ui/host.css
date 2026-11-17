@@ -16,13 +16,13 @@ body[data-yomni-wallpaper] {
   --yomni-we-tint: var(--we-surface-tint-light, #f2f4f8);
   --yomni-we-pane: color-mix(
     in srgb,
-    var(--yomni-we-tint) calc(var(--we-glass-alpha, 0.7) * 24%),
+    var(--yomni-we-tint) calc(var(--we-glass-alpha, 0.7) * 100%),
     transparent
   );
   --yomni-we-text-pane: color-mix(
     in srgb,
     var(--yomni-we-tint)
-      calc(var(--we-input-alpha, var(--we-glass-alpha, 0.7)) * 38%),
+      calc(var(--we-input-alpha, var(--we-glass-alpha, 0.7)) * 100%),
     transparent
   );
   --yomni-we-popup-pane: color-mix(
@@ -88,7 +88,11 @@ body[data-yomni-wallpaper][data-we-glass-page]
 }
 body[data-yomni-wallpaper][data-we-wallpaper]
   :is(.sidebar, .app-sidebar, .yomni-chat-app-sidebar) {
-  background: transparent !important;
+  background: var(--yomni-we-tint) !important;
+}
+body[data-yomni-wallpaper][data-we-wallpaper]
+  :is(.window-titlebar, .yomni-chat-topbar) {
+  background: var(--yomni-we-tint) !important;
 }
 body[data-yomni-wallpaper][data-we-left-sidebar]
   :is(.sidebar, .app-sidebar, .yomni-chat-app-sidebar) {
