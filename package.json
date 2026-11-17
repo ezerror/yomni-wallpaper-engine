@@ -8,7 +8,8 @@
     "yomni-manifest.json",
     "dist",
     "LICENSE",
-    "NOTICE"
+    "NOTICE",
+    "assets"
   ],
   "scripts": {
     "build": "node scripts/build-yomni.mjs && yomni-plugin-build .",
