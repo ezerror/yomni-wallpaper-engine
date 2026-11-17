@@ -10,5 +10,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src/index.ts", "src/modera-server.js"]
+  "include": ["src/index.ts", "src/yomni-server.js"]
 }

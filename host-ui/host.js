@@ -18,7 +18,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   const fetchHost = (url, options = {}) => {
     const headers = new Headers(options.headers);
     if (String(url).startsWith(endpoint + "/"))
-      headers.set("X-Modera-Wallpaper", capability);
+      headers.set("X-Yomni-Wallpaper", capability);
     return nativeFetch(url, {
       ...options,
       headers,
@@ -35,7 +35,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
     blobUrls.add(url);
     return url;
   };
-  const moderaHost = {
+  const yomniHost = {
     endpoint,
     fetch: fetchHost,
     signal,
@@ -46,23 +46,23 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
       }));
     },
     fontComponents: {
-      markdown: "body[data-modera-wallpaper] .mu-markdown",
+      markdown: "body[data-yomni-wallpaper] .yomni-markdown",
       codeBlock:
-        "body[data-modera-wallpaper] .mu-markdown pre, body[data-modera-wallpaper] .mu-markdown pre code",
+        "body[data-yomni-wallpaper] .yomni-markdown pre, body[data-yomni-wallpaper] .yomni-markdown pre code",
       table:
-        "body[data-modera-wallpaper] .mu-markdown table, body[data-modera-wallpaper] .mu-markdown td, body[data-modera-wallpaper] .mu-markdown th",
-      terminal: "body[data-modera-wallpaper] .mu-agent-terminal pre, body[data-modera-wallpaper] .terminal-output pre",
+        "body[data-yomni-wallpaper] .yomni-markdown table, body[data-yomni-wallpaper] .yomni-markdown td, body[data-yomni-wallpaper] .yomni-markdown th",
+      terminal: "body[data-yomni-wallpaper] .yomni-agent-terminal pre, body[data-yomni-wallpaper] .terminal-output pre",
     },
     async loadLiveFrame(frame, path) {
       // A trusted, bundled renderer shares the parent origin, preserving upstream __wp calls.
       // Only the third-party wallpaper runs in a nested opaque-origin sandbox.
       const search = new URL(path, endpoint).search;
       const request = String(
-        Number(frame.dataset.moderaRendererRequest || 0) + 1,
+        Number(frame.dataset.yomniRendererRequest || 0) + 1,
       );
-      frame.dataset.moderaRendererRequest = request;
+      frame.dataset.yomniRendererRequest = request;
       rendererTask ??= fetchHost(
-        endpoint + "/wallpaper-engine/scene-live/assets/modera-renderer.js",
+        endpoint + "/wallpaper-engine/scene-live/assets/yomni-renderer.js",
         { signal },
       )
         .then((response) => {
@@ -80,34 +80,34 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
         if (!signal.aborted) console.error(error);
         return;
       }
-      if (signal.aborted || frame.dataset.moderaRendererRequest !== request)
+      if (signal.aborted || frame.dataset.yomniRendererRequest !== request)
         return;
-      const prelude = `globalThis.__moderaWallpaperSearch=${JSON.stringify(search)};globalThis.__moderaWallpaperOrigin=${JSON.stringify(endpoint)};
+      const prelude = `globalThis.__yomniWallpaperSearch=${JSON.stringify(search)};globalThis.__yomniWallpaperOrigin=${JSON.stringify(endpoint)};
         const hostBase=${JSON.stringify(endpoint)},hostKey=${JSON.stringify(capability)},realFetch=globalThis.fetch.bind(globalThis);
         globalThis.fetch=(input,init={})=>{let url=typeof input==='string'?input:input.url;
           if(url.startsWith('/'))url=hostBase+url;
           const headers=new Headers(init.headers||(typeof input==='object'?input.headers:undefined));
-          if(url.startsWith(hostBase+'/'))headers.set('X-Modera-Wallpaper',hostKey);
+          if(url.startsWith(hostBase+'/'))headers.set('X-Yomni-Wallpaper',hostKey);
           return realFetch(url,{...init,headers});};\n`;
       const source = blob(prelude + rendererSource, "text/javascript");
-      const previous = frame.dataset.moderaRendererBlob;
+      const previous = frame.dataset.yomniRendererBlob;
       if (previous) {
         URL.revokeObjectURL(previous);
         blobUrls.delete(previous);
       }
-      frame.dataset.moderaRendererBlob = source;
+      frame.dataset.yomniRendererBlob = source;
       frame.srcdoc = `<!doctype html><html><head><meta charset="UTF-8"><style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101418}</style><script type="module" src="${source}"></script></head><body></body></html>`;
     },
     suspendLiveFrame(frame) {
-      frame.dataset.moderaRendererRequest = String(
-        Number(frame.dataset.moderaRendererRequest || 0) + 1,
+      frame.dataset.yomniRendererRequest = String(
+        Number(frame.dataset.yomniRendererRequest || 0) + 1,
       );
       frame.removeAttribute("srcdoc");
-      const url = frame.dataset.moderaRendererBlob;
+      const url = frame.dataset.yomniRendererBlob;
       if (url) {
         URL.revokeObjectURL(url);
         blobUrls.delete(url);
-        delete frame.dataset.moderaRendererBlob;
+        delete frame.dataset.yomniRendererBlob;
       }
     },
   };
@@ -201,7 +201,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   syncTheme();
 
   // The upstream drawer covers the viewport; Yomni reserves a native titlebar.
-  const titlebarOffset = "--modera-we-titlebar-bottom";
+  const titlebarOffset = "--yomni-we-titlebar-bottom";
   const previousOffset = document.body.style.getPropertyValue(titlebarOffset);
   const previousPriority =
     document.body.style.getPropertyPriority(titlebarOffset);
@@ -300,12 +300,12 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   };
   const renderSettings = () => {
     if (settingsRoot && section)
-      settingsRoot.render(React.createElement("div", { className: "modera-we-settings-content" }, section()));
+      settingsRoot.render(React.createElement("div", { className: "yomni-we-settings-content" }, section()));
   };
   const syncSettingsTarget = () => {
     const next = document.querySelector('.plugin-settings-layer.active [data-plugin-settings-host="yomni.wallpaper-engine"]');
     if (next === settingsTarget) return;
-    upstream?.moderaCloseSettings();
+    upstream?.yomniCloseSettings();
     settingsRoot?.unmount();
     settingsTarget = next;
     settingsRoot = next ? createRoot(next) : null;
@@ -316,7 +316,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   syncSettingsTarget();
   cleanups.push(() => {
     settingsObserver.disconnect();
-    upstream?.moderaCloseSettings();
+    upstream?.yomniCloseSettings();
     settingsRoot?.unmount();
     settingsRoot = null;
   });
@@ -333,7 +333,7 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
   syncPanelTarget();
   cleanups.push(() => {
     panelObserver.disconnect();
-    upstream?.moderaCloseSettings();
+    upstream?.yomniCloseSettings();
     panelRoot?.unmount();
     panelRoot = null;
     closePanel();
@@ -375,8 +375,8 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
       },
     },
   };
-  document.body.setAttribute("data-modera-wallpaper", "on");
-  cleanups.push(() => document.body.removeAttribute("data-modera-wallpaper"));
+  document.body.setAttribute("data-yomni-wallpaper", "on");
+  cleanups.push(() => document.body.removeAttribute("data-yomni-wallpaper"));
   const dispose = () => {
     signal.removeEventListener("abort", dispose);
     for (const cleanup of cleanups.splice(0).reverse()) {
@@ -390,18 +390,18 @@ export default async function mount({ pluginId, projectId, setTheme, signal }) {
     blobUrls.clear();
   };
   try {
-    upstream = createUpstream(moderaHost, React, {
+    upstream = createUpstream(yomniHost, React, {
       createRoot,
       flushSync,
       createPortal,
     });
     const syncFontGate = () =>
       document.body.toggleAttribute(
-        "data-modera-we-fonts",
-        upstream.moderaFontCustom(),
+        "data-yomni-we-fonts",
+        upstream.yomniFontCustom(),
       );
-    cleanups.push(upstream.moderaSubscribe(syncFontGate));
-    cleanups.push(() => document.body.removeAttribute("data-modera-we-fonts"));
+    cleanups.push(upstream.yomniSubscribe(syncFontGate));
+    cleanups.push(() => document.body.removeAttribute("data-yomni-we-fonts"));
     syncFontGate();
     upstream.apply(ctx);
   } catch (error) {

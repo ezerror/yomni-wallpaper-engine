@@ -266,7 +266,7 @@ function avatarStop() {
  */
 function syncAvatarLayer() {
   // Modera has no conversation avatars; upstream presets must not add them.
-  const on = typeof moderaHost === 'undefined' && selection.avatarEnabled === true;
+  const on = typeof yomniHost === 'undefined' && selection.avatarEnabled === true;
   const body = weBody();
   if (!on || !body || typeof MutationObserver !== 'function') {
     if (avatarActive || avatarObserver) avatarStop();

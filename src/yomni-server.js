@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import { randomBytes } from "node:crypto";
 
 /** Keep upstream route handlers (including streaming/Range) behind a revocable capability. */
-export async function createModeraServer(signal) {
+export async function createYomniServer(signal) {
   const routes = [];
   const capability = randomBytes(32).toString("hex");
   const mount = `/session/${randomBytes(32).toString("hex")}`;
@@ -33,7 +33,7 @@ export async function createModeraServer(signal) {
     res.setHeader("Access-Control-Allow-Origin", origin || "null");
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Content-Type, Range, X-Modera-Wallpaper",
+      "Content-Type, Range, X-Yomni-Wallpaper",
     );
     res.setHeader(
       "Access-Control-Allow-Methods",
@@ -49,14 +49,14 @@ export async function createModeraServer(signal) {
       res.writeHead(204).end();
       return;
     }
-    if (opaque && !assets && req.headers["x-modera-wallpaper"] !== capability) {
+    if (opaque && !assets && req.headers["x-yomni-wallpaper"] !== capability) {
       // Preflights do not contain the secret; authenticate the actual request instead.
       res.writeHead(403).end("Opaque wallpaper cannot access host controls");
       return;
     }
     if (
       !["GET", "HEAD"].includes(req.method) &&
-      req.headers["x-modera-wallpaper"] !== capability
+      req.headers["x-yomni-wallpaper"] !== capability
     ) {
       res.writeHead(403).end("Host capability required");
       return;

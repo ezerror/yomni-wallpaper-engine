@@ -39,7 +39,7 @@ const factory = client.replace(
 );
 await writeFile(
   join(root, "dist/generated/upstream-client.js"),
-  `export function createUpstream(moderaHost, React, ReactDOM) {\nconst load = entry => entry.factory(id => { if (id === 'react') return React; if (id === 'react-dom') return ReactDOM; throw new Error('Unknown upstream dependency: ' + id); });\n${factory}\nreturn plugin;\n}\n`,
+  `export function createUpstream(yomniHost, React, ReactDOM) {\nconst load = entry => entry.factory(id => { if (id === 'react') return React; if (id === 'react-dom') return ReactDOM; throw new Error('Unknown upstream dependency: ' + id); });\n${factory}\nreturn plugin;\n}\n`,
 );
 const html = await readFile(join(root, "lib/webwallgl/index.html"), "utf8");
 const entry = html.match(
@@ -62,9 +62,9 @@ if (
 const adaptedRenderer = originalRenderer
   .replace(
     originCheck,
-    "new URL(t,location.href).origin===new URL(globalThis.__moderaWallpaperOrigin).origin",
+    "new URL(t,location.href).origin===new URL(globalThis.__yomniWallpaperOrigin).origin",
   )
-  .replaceAll(diagnosticsOrigin, "globalThis.__moderaWallpaperOrigin")
+  .replaceAll(diagnosticsOrigin, "globalThis.__yomniWallpaperOrigin")
   .replace(webSandbox, 's.setAttribute("allow","autoplay");' + webSandbox);
 const renderer = await build({
   stdin: {
@@ -78,13 +78,13 @@ const renderer = await build({
   write: false,
   minify: true,
   define: {
-    "location.search": "globalThis.__moderaWallpaperSearch",
-    "location.origin": "globalThis.__moderaWallpaperOrigin",
+    "location.search": "globalThis.__yomniWallpaperSearch",
+    "location.origin": "globalThis.__yomniWallpaperOrigin",
   },
   logLevel: "silent",
 });
 await writeFile(
-  join(root, "dist/upstream/webwallgl/assets/modera-renderer.js"),
+  join(root, "dist/upstream/webwallgl/assets/yomni-renderer.js"),
   renderer.outputFiles[0].text,
 );
 await build({
@@ -108,7 +108,7 @@ const roleTokens = THEME_TYPE_ROLES.map((role) => {
 await writeFile(
   join(root, "dist/ui/host.css"),
   (await readFile(join(root, "host-ui/host.css"), "utf8")) +
-    `\nbody[data-modera-wallpaper]{${roleTokens}}\n`,
+    `\nbody[data-yomni-wallpaper]{${roleTokens}}\n`,
 );
 await cp(join(root, "host-ui/index.html"), join(root, "dist/ui/index.html"));
 await rm(join(outputRoot, "generated"), { recursive: true, force: true });

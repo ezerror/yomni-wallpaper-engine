@@ -31,7 +31,7 @@ test("Yomni activates the wallpaper service and preserves upstream media routes"
     fetch(connection.endpoint + "/wallpaper-engine" + path, {
       ...options,
       headers: {
-        "X-Modera-Wallpaper": connection.capability,
+        "X-Yomni-Wallpaper": connection.capability,
         ...options.headers,
       },
     });
@@ -57,13 +57,13 @@ test("Yomni activates the wallpaper service and preserves upstream media routes"
     const item = inventory.wallpapers.find((entry) => entry.id === uploaded.id);
     assert.ok(item?.media.startsWith(connection.endpoint));
     const range = await fetch(item.media, {
-      headers: { Range: "bytes=0-7", "X-Modera-Wallpaper": connection.capability },
+      headers: { Range: "bytes=0-7", "X-Yomni-Wallpaper": connection.capability },
     });
     assert.equal(range.status, 206);
     assert.deepEqual(Buffer.from(await range.arrayBuffer()), image.subarray(0, 8));
-    const renderer = await request("/scene-live/assets/modera-renderer.js");
+    const renderer = await request("/scene-live/assets/yomni-renderer.js");
     assert.equal(renderer.status, 200);
-    assert.ok((await renderer.text()).includes("__moderaWallpaperSearch"));
+    assert.ok((await renderer.text()).includes("__yomniWallpaperSearch"));
     const oldUrl = connection.endpoint;
     await plugin.deactivate();
     await assert.rejects(fetch(oldUrl + "/wallpaper-engine/settings"));

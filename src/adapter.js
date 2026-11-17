@@ -32,7 +32,7 @@ const ADAPTER_LABELS = {
   get auto() { return weT('自动检测'); },
   get browser() { return weT('原生浏览器'); },
   get 'desktop-community'() { return weT('非官方桌面端'); },
-  get 'desktop-official'() { return typeof moderaHost !== 'undefined' ? 'Yomni Desktop' : weT('官方桌面端'); },
+  get 'desktop-official'() { return typeof yomniHost !== 'undefined' ? 'Yomni Desktop' : weT('官方桌面端'); },
 };
 
 // 宿主上报的落点：`GET /settings` 响应里的 `adapter` 字段（null = 还没拿到）。

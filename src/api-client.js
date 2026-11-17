@@ -43,12 +43,12 @@ function apiUrl(path) {
   // 应用侧封面恒 404，而同路径 curl 200）。
   if (/^[a-z][a-z0-9+.-]*:/i.test(p) || p.startsWith('data:') || p.startsWith('blob:')) return p;
   const relative = p.startsWith(BASE) ? p : BASE + (p.startsWith('/') ? p : '/' + p);
-  return typeof moderaHost !== 'undefined' ? moderaHost.endpoint + relative : relative;
+  return typeof yomniHost !== 'undefined' ? yomniHost.endpoint + relative : relative;
 }
 
 function pickFetch(injected) {
   if (typeof injected === 'function') return injected;
-  if (typeof moderaHost !== 'undefined') return moderaHost.fetch;
+  if (typeof yomniHost !== 'undefined') return yomniHost.fetch;
   if (typeof fetch === 'function') return fetch;
   return null;
 }

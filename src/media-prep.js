@@ -403,7 +403,7 @@ function prepareSceneStaticStage(w, prep, onReady, onFail) {
 // 元素级领养（buildMedia 收编）。staging 容器的收尾在 applySelection 返回后 ——
 // 节点级领养时它已变成新层，元素级领养时它已完成使命移除。
 function applySelection(id, opts) {
-  if (typeof moderaHost !== "undefined" && moderaHost.signal.aborted) return;
+  if (typeof yomniHost !== "undefined" && yomniHost.signal.aborted) return;
   // 让路态里用户**手动重选**壁纸（点卡片 / 快捷面板 / 「下一张」）= 最新的显式动作 ⇒
   // 立刻退出让路：玻璃整族回来，且用用户这次的选择（skipRestore 别拿记忆里的旧 id 盖它）。
   // 只认 fromManual —— 启动恢复 / revalidate / 轮换提交都不是"用户刚点了"。

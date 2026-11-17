@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { createModeraServer } from "./modera-server.js";
+import { createYomniServer } from "./yomni-server.js";
 import type { PluginContext, PluginContributions } from "@yomni/plugin-sdk";
 
 let dispose: (() => void) | undefined;
@@ -11,7 +11,7 @@ export async function activate(
   if (!context.resourcePath)
     throw new Error("Wallpaper Engine requires bundled backend resources");
   context.signal.throwIfAborted();
-  const server = await createModeraServer(context.signal);
+  const server = await createYomniServer(context.signal);
   try {
     const upstream = await import(
       pathToFileURL(join(context.resourcePath, "dist/upstream/index.js")).href
@@ -19,7 +19,7 @@ export async function activate(
     context.signal.throwIfAborted();
     const cleanup = upstream.apply({
       webServer: server,
-      modera: {
+      yomni: {
         dataDir: context.storagePath,
         mediaBase: server.endpoint,
         steamRoot: (process.env.YOMNI_WALLPAPER_STEAM_ROOT),

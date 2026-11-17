@@ -385,7 +385,7 @@ const selection = {
 
 const listeners = new Set();
 function emit() {
-  if (typeof moderaHost !== "undefined" && moderaHost.signal.aborted) return;
+  if (typeof yomniHost !== "undefined" && yomniHost.signal.aborted) return;
   for (const fn of [...listeners]) fn();
 }
 function subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); }
@@ -5573,7 +5573,7 @@ function UpdateNotice() {
         "④ ", noticeEx(2), React.createElement("strong", null, weT("圆角效果也可以调了")),
         weT("：在本插件设置的「外观」分页。")),
       React.createElement("p", { className: "we-update-notice__hint" },
-        typeof moderaHost !== "undefined" ? "更新后可重启 Yomni；本提示每个版本只出现一次。" : weT("升级后建议重启一次 DSH，改动才完整生效；本提示每个新版本只出现一次，点下方按钮关闭后不再弹出。")),
+        typeof yomniHost !== "undefined" ? "更新后可重启 Yomni；本提示每个版本只出现一次。" : weT("升级后建议重启一次 DSH，改动才完整生效；本提示每个新版本只出现一次，点下方按钮关闭后不再弹出。")),
     ),
     React.createElement("button", { className: "we-update-notice__btn we-picker__btn", type: "button", onClick: dismiss }, weT("知道了")),
   );
@@ -6200,7 +6200,7 @@ function apply(ctx) {
 
 exports.apply = apply;
 exports.inject = inject;
-exports.moderaCloseSettings = () => { if (selection.pickerOpen) closePicker(); };
-exports.moderaSubscribe = subscribe;
-exports.moderaFontCustom = () => selection.fontCustom;
+exports.yomniCloseSettings = () => { if (selection.pickerOpen) closePicker(); };
+exports.yomniSubscribe = subscribe;
+exports.yomniFontCustom = () => selection.fontCustom;
 return module.exports;

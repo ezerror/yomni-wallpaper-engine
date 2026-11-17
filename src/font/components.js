@@ -144,7 +144,7 @@ function scanHookScopes(doc, hooks) {
  * 其余组件用白名单模块名（`body [class*="_<prefix>_"]`）。
  */
 function componentScopeSelector(id, hookScopes) {
-  if (typeof moderaHost !== 'undefined' && moderaHost.fontComponents[id]) return moderaHost.fontComponents[id];
+  if (typeof yomniHost !== 'undefined' && yomniHost.fontComponents[id]) return yomniHost.fontComponents[id];
   const t = targetById(id);
   if (!t) return null;
   if (t.dslHooks) {
@@ -162,7 +162,7 @@ function componentScopeSelector(id, hookScopes) {
  * @param id 组件 id（= 设置键），**不是**模块名 —— 模块名不许从外部传进来。
  */
 function selectorFor(id) {
-  if (typeof moderaHost !== 'undefined' && moderaHost.fontComponents[id]) return moderaHost.fontComponents[id];
+  if (typeof yomniHost !== 'undefined' && yomniHost.fontComponents[id]) return yomniHost.fontComponents[id];
   const t = targetById(id);
   if (!t) throw new Error('component-fonts: 未知组件 ' + id);
   if (!PREFIX_RE.test(t.prefix)) throw new Error('component-fonts: 非法模块前缀 ' + t.prefix);
@@ -177,7 +177,7 @@ function probeComponentTargets(doc, targets) {
   const d = doc || (typeof document !== 'undefined' ? document : null);
   const list = targets || COMPONENT_FONT_TARGETS;
   if (!d || typeof d.querySelectorAll !== 'function') return [];
-  if (typeof moderaHost !== 'undefined') return list.filter((t) => moderaHost.fontComponents[t.id] && d.querySelectorAll(moderaHost.fontComponents[t.id]).length).map((t) => t.id);
+  if (typeof yomniHost !== 'undefined') return list.filter((t) => yomniHost.fontComponents[t.id] && d.querySelectorAll(yomniHost.fontComponents[t.id]).length).map((t) => t.id);
   const byPrefix = new Map();
   const hit = [];
   for (const t of list) {
@@ -210,7 +210,7 @@ function buildComponentCss(config, available, resolveFamily) {
     // hooks 通道的组件**不在这里出现**：它们的作用域模块名是共用的（代码块/终端块都是
     // `block`，还连着搜索块/网页块），在这里写真实属性会误伤同名元素；而容器上的 font
     // 又会被后代简写盖掉。它们只在 buildDslBlocks 里改官方钩子。
-    if (target.route === 'hooks' && typeof moderaHost === 'undefined') continue;
+    if (target.route === 'hooks' && typeof yomniHost === 'undefined') continue;
     if (!avail.includes(target.id)) continue;
     const c = cfg[target.id];
     if (!c || typeof c !== 'object') continue;

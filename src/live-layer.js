@@ -168,7 +168,7 @@ function liveRenderUrl(selLike) {
   // 那条路挤不过首帧 LIVE_FIRST_FRAME_MS 预算（那里还要买纹理解码与 shader 编译）。
   // 网页壁纸**不走**这个源：它的入口是绝对 URL（webLiveSrc），mediaBase 对它只剩
   //「诊断信标打哪个 origin」一个用途，保持原样以免多动一条已经通的链。
-  const mediaBase = (typeof moderaHost !== "undefined" ? moderaHost.endpoint : (isWeb ? (typeof location !== "undefined" && location.origin ? location.origin : "") : resolveSceneMediaBase()))
+  const mediaBase = (typeof yomniHost !== "undefined" ? yomniHost.endpoint : (isWeb ? (typeof location !== "undefined" && location.origin ? location.origin : "") : resolveSceneMediaBase()))
     + SCENE_FILES_PATH;
   return "/wallpaper-engine/scene-live/index.html?type=" + (isWeb ? "web" : "scene")
     // 网页壁纸必须严格沙箱：第三方 workshop HTML 不得继承 DSH 的 origin
@@ -265,7 +265,7 @@ function liveLog(tag, detail, level, verboseOnly) {
   try {
     if (typeof Image === "function") {
       const img = new Image();
-      if (typeof moderaHost !== "undefined") {
+      if (typeof yomniHost !== "undefined") {
         void apiFetch("/diag?msg=" + encodeURIComponent(line) + "&lvl=" + lvl, { parse: false });
       } else img.src = "/diag?msg=" + encodeURIComponent(line) + "&lvl=" + lvl;
     }
@@ -844,7 +844,7 @@ function armDeferredLiveFrame(frame) {
   if (!isEffectivelyPlaying()) return false;
   const url = frame.dataset.weLiveSrc;
   frame.dataset.weLiveSrc = "";
-  try { if (typeof moderaHost !== "undefined") moderaHost.loadLiveFrame(frame, url); else frame.src = url; } catch { frame.dataset.weLiveSrc = url; return false; }
+  try { if (typeof yomniHost !== "undefined") yomniHost.loadLiveFrame(frame, url); else frame.src = url; } catch { frame.dataset.weLiveSrc = url; return false; }
   liveLog("live-payload-arm", "延迟的渲染页开始加载（可见且应播；载荷 " + livePayloadSizeBrief() + "）", "info");
   return true;
 }
@@ -865,7 +865,7 @@ function suspendLivePayload(frame, watch) {
   const url = frame.getAttribute && frame.getAttribute("src");
   if (!url || url === "about:blank") return false;
   frame.dataset.weLiveSrc = url;
-  try { if (typeof moderaHost !== "undefined") moderaHost.suspendLiveFrame(frame); frame.src = "about:blank"; } catch { return false; }
+  try { if (typeof yomniHost !== "undefined") yomniHost.suspendLiveFrame(frame); frame.src = "about:blank"; } catch { return false; }
   liveLog("live-payload-suspend", "wid=" + watch.wid + " 隐藏中且首帧未出 → 停掉载荷（可见时补回）", "info");
   stopLiveWatch();
   return true;
@@ -1583,7 +1583,7 @@ function createLiveFrame(sel) {
     frame.dataset.weLiveSrc = url;
     liveLog("live-payload-defer", "wid=" + (sel && sel.id) + " 隐藏/未播放中 → 先不加载载荷（可见时补）", "info", true);
   } else {
-    if (typeof moderaHost !== "undefined") moderaHost.loadLiveFrame(frame, url); else frame.src = url;
+    if (typeof yomniHost !== "undefined") yomniHost.loadLiveFrame(frame, url); else frame.src = url;
   }
   frame.setAttribute("frameborder", "0");
   frame.setAttribute("scrolling", "no");

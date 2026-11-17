@@ -351,7 +351,7 @@ let mediaInfoAbort = null;
  */
 function transcodedUrlFor(token, fps) {
   const path = "/wallpaper-engine/transcoded/" + encodeURIComponent(token) + "?fps=" + fps;
-  return typeof moderaHost !== "undefined" ? apiUrl(path) : path;
+  return typeof yomniHost !== "undefined" ? apiUrl(path) : path;
 }
 async function refreshMediaInfo(force) {
   const token = selection.type === "video" && selection.url
